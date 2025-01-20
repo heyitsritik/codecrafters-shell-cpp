@@ -33,7 +33,7 @@ int main() {
       words.push_back(word);
     }
     if(!words.empty() && words[0] == "echo"){
-      if(words.size() > 4)
+      if(input.size() > 4)
         cout<<input.substr(5,input.size() - 5)<<endl;
       else
         cout<<endl;
