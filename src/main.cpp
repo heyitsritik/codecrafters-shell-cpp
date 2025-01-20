@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream>
+#include <string>
+
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -11,10 +14,18 @@ int main() {
 
     std::string input;
     std::getline(std::cin, input);
+  
     if(input == "exit 0"){
       return 0;
     }
-    std::cout<<input<<": "<<"command not found\n";
+
+    else if(input.substr(0,5) == "echo "){
+      std::cout<<input.substr(5,input.size() - 5)<<std::endl;
+    }
+
+    else{
+      std::cout<<input<<": command not found\n";
+    }
     
   }
 }
