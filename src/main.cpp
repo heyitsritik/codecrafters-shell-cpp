@@ -1,6 +1,13 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
+using std::cout;
+using std::endl;
+using std::string;
+using std::stringstream;
+using std::vector;
+
 
 
 int main() {
@@ -10,21 +17,37 @@ int main() {
 
   // Uncomment this block to pass the first stage
   while(true){
-    std::cout << "$ ";
+    cout << "$ ";
 
-    std::string input;
+    string input;
     std::getline(std::cin, input);
-  
+
     if(input == "exit 0"){
       return 0;
     }
 
-    else if(input.substr(0,5) == "echo "){
-      std::cout<<input.substr(5,input.size() - 5)<<std::endl;
+    vector<string> words;
+    stringstream s(input);
+    string word;
+    while(s >>word){
+      words.push_back(word);
+    }
+    if(!words.empty() && words[0] == "echo"){
+      if(words.size() > 4)
+        cout<<input.substr(5,input.size() - 5)<<endl;
+      else
+        cout<<endl;
+    }
+    else if(!words.empty() && words[0] == "type"){
+      if(words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit")){
+        cout<<words[1]<<" is a shell builtin"<<endl;
+      }else {
+        cout<<words[1]<<": not found"<<endl;
+      }
     }
 
     else{
-      std::cout<<input<<": command not found\n";
+      cout<<input<<": command not found\n";
     }
     
   }
