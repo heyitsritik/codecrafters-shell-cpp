@@ -210,7 +210,7 @@ int main()
 				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
 			}
 		}
-		else if(!word.empty() && input.find("exe") != string::npos){
+		else if(!word.empty() && (input[0] == '\'' || input[0] == '\"')){
 			string path;
 			std::ifstream file(words.back());
 				while(getline(file, path)){
