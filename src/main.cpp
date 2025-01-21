@@ -210,6 +210,13 @@ int main()
 				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
 			}
 		}
+		else if(!word.empty() && input.find("'exe with space'") != string::npos){
+			string path;
+			std::ifstream file(words.back());
+				while(getline(file, path)){
+					cout<<path;
+				}
+		}
 		else if(!words.empty() && words[0] == "cat"){
 			int idx = 4;
 			char chr;
