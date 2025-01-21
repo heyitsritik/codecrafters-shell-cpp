@@ -75,9 +75,16 @@ int main()
 		}
 		if (!words.empty() && words[0] == "echo")
 		{
-			if(input[5] == '\'')
-				cout<<input.substr(6,input.size() - 7)<<endl;
-			else{
+			if(input[5] == '\''){
+				string sent = "";
+				for(int i = 5; i<input.size();i++){
+					if(input[i] == '\''){
+						continue;
+					}
+					sent += input[i];
+				}
+				cout<<sent<<endl;
+			}else{
 				string word;
 				int t = 1;
 				for(int i = 1; i<words.size(); i++){
