@@ -4,12 +4,13 @@
 #include <vector>
 #include <filesystem>
 #include <unistd.h>
-#include <cstdlib>
+#include <fstream>
 using std::cout;
 using std::endl;
 using std::string;
 using std::stringstream;
 using std::vector;
+using std::fstream;
 namespace fs = std::filesystem;
 
 
@@ -74,10 +75,10 @@ int main()
 		}
 		if (!words.empty() && words[0] == "echo")
 		{
-			if (input.size() > 4)
-				cout << input.substr(5, input.size() - 5) << endl;
-			else
-				cout << endl;
+			if(input[5] == '\''){
+				cout<<input.substr(6,input.size() - 2)<<endl;
+			}else
+				cout << input.substr(5) << endl;
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
@@ -106,9 +107,37 @@ int main()
 				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
 			}
 		}
-
-		else
-		{
+		else if(!words.empty() && words[0] == "cat"){
+			int idx = input.find('\'');
+			vector<string> paths;
+			string path = "";
+			bool flag = false;
+			while(idx < input.size()){
+				if(input[idx] == '\''){
+					idx++;
+					flag = !flag;
+					if(flag == false){
+						paths.push_back(path);
+						path = "";
+					}
+				}
+				else if(flag){
+					path += input[idx];
+					idx++;
+				}else{
+					idx++;
+				}
+			}
+			path = "";
+			for(auto p:paths){
+				std::ifstream file(p);
+				while(getline(file, path)){
+					cout<<path<<endl;
+				}
+				file.close();
+			}
+		}
+		else{
 			string get_path = executable_path(words[0]);
 			// cout<<get_path<<endl;
 			if(!get_path.empty()){
