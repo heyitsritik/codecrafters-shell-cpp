@@ -91,11 +91,14 @@ int main()
 				else
 					cout << words[1] << ": not found" << endl;
 			}
+		}else if(!words.empty() && words[0] == "pwd"){
+			cout<<std::filesystem::current_path()<<endl;
 		}
 
 		else
 		{
 			string get_path = executable_path(words[0]);
+			// cout<<get_path<<endl;
 			if(!get_path.empty()){
 				std::system(input.c_str());
 			}else
