@@ -79,7 +79,7 @@ int main()
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
-			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit"))
+			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit" || words[1] == "pwd"))
 			{
 				cout << words[1] << " is a shell builtin" << endl;
 			}
