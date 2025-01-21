@@ -84,6 +84,15 @@ int main()
 					sent += input[i];
 				}
 				cout<<sent<<endl;
+			}else if(input[5] == '\"'){
+				string sent = "";
+				for(int i = 5; i<input.size();i++){
+					if(input[i] == '\"'){
+						continue;
+					}
+					sent += input[i];
+				}
+				cout<<sent<<endl;
 			}else{
 				string word;
 				int t = 1;
@@ -121,12 +130,12 @@ int main()
 			}
 		}
 		else if(!words.empty() && words[0] == "cat"){
-			int idx = input.find('\'');
+			int idx = 4;
 			vector<string> paths;
 			string path = "";
 			bool flag = false;
 			while(idx < input.size()){
-				if(input[idx] == '\''){
+				if(input[idx] == '\'' || input[idx] == '\"'){
 					idx++;
 					flag = !flag;
 					if(flag == false){
