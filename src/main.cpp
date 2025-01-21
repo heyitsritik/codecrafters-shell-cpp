@@ -78,7 +78,7 @@ int main()
 					input += extra;
 					cout<<input<<endl;
 		}
-
+		int len = input.size();
 		if (input == "exit 0" || input == "exit0")
 		{
 			return 0;
@@ -98,7 +98,7 @@ int main()
 				string sent = "";
 				vector<string> sents;
 				bool flag = false;
-				for(int i = 5; i<input.size() - 1;i++){
+				for(int i = 5; i<len - 1;i++){
 					if(input[i] == '\'' && input[i+1] == '\''){
 						i++;
 						continue;
@@ -122,7 +122,7 @@ int main()
 				string sent = "";
 				vector<string> sents;
 				bool flag = false;
-				for(int i = 5; i<input.size() - 1;i++){
+				for(int i = 5; i<len - 1;i++){
 					if((input[i] == '\"' && input[i+1] == '\"')){
 						i++;
 						continue;
@@ -140,19 +140,19 @@ int main()
 							sents.push_back(sent);
 							sent = "";
 						}
-						if(i+1 < input.size() && input[i] == ' '){
+						if(i+1 < len && input[i+1] == ' '){
 							sents.push_back(" ");
 						}
 						continue;
-					}else if(!flag and input[i] != ' '){
+					}else if(!flag && input[i] != ' '){
 						flag = !flag;
 						sent += input[i];
 						continue;
-					}else if(flag and input[i] == ' '){
+					}else if(flag && input[i] == ' '){
 						flag = !flag;
 						sents.push_back(sent);
 						sent = "";
-						if(i+1 < input.size() && input[i] == ' '){
+						if(i+1 < len && input[i+1] == ' '){
 							sents.push_back(" ");
 						}
 						continue;
@@ -167,7 +167,7 @@ int main()
 				cout<<endl;
 			}else if(input.find('\\') != string::npos){
 					string sample = "";
-					for(int i = 5; i<input.size(); i++){
+					for(int i = 5; i<len; i++){
 						if(input[i] == '\\'){
 							continue;
 						}
@@ -221,7 +221,7 @@ int main()
 			vector<string> paths;
 			string path = "";
 			bool flag = false;
-			while(idx < input.size()){
+			while(idx < len){
 				if(input[idx] == chr){
 					idx++;
 					flag = !flag;
