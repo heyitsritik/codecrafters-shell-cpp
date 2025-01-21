@@ -10,6 +10,8 @@ using std::endl;
 using std::string;
 using std::stringstream;
 using std::vector;
+namespace fs = std::filesystem;
+
 
 string get_address(string command)
 {
@@ -79,7 +81,7 @@ int main()
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
-			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit" || words[1] == "pwd"))
+			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit" || words[1] == "pwd" || words[1] == "cd"))
 			{
 				cout << words[1] << " is a shell builtin" << endl;
 			}
@@ -94,6 +96,13 @@ int main()
 		}else if(!words.empty() && words[0] == "pwd"){
 			string pwd = std::filesystem::current_path();
 			cout<<pwd<<endl;
+		}else if(!words.empty() && words[0] == "cd"){
+			string pwd =fs::current_path();
+			if(words.size() > 1 && fs::is_directory(pwd + "words[1]")){
+				chdir((pwd + words[1]).c_str());
+			}else{
+				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
+			}
 		}
 
 		else
