@@ -99,7 +99,7 @@ int main()
 		}else if(!words.empty() && words[0] == "cd"){
 			string pwd =fs::current_path();
 			// cout<<words[1]<<endl;
-			if(words.size() > 1 && fs::is_directory(pwd + words[1])){
+			if(words.size() > 1 && fs::is_directory(words[1])){
 				chdir((words[1]).c_str());
 			}else{
 				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
