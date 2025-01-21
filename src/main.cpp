@@ -93,7 +93,7 @@ int main()
 			}
 		}else if(!words.empty() && words[0] == "pwd"){
 			string pwd = std::filesystem::current_path();
-			cout<<std::filesystem::current_path()<<endl;
+			cout<<pwd<<endl;
 		}
 
 		else
