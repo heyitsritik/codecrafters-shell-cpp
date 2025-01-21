@@ -97,7 +97,10 @@ int main()
 			string pwd = std::filesystem::current_path();
 			cout<<pwd<<endl;
 		}else if(!words.empty() && words[0] == "cd"){
-			if(words.size() > 1 && fs::is_directory(words[1])){
+			if(words.size() > 1 && words[1] == "~"){
+				chdir(std::getenv("HOME"));
+			}
+			else if(words.size() > 1 && fs::is_directory(words[1])){
 				chdir((words[1]).c_str());
 			}else{
 				cout<<"cd: " << words[1]<<": No such file or directory"<<endl;
