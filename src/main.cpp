@@ -140,6 +140,9 @@ int main()
 							sents.push_back(sent);
 							sent = "";
 						}
+						if(i+1 < input.size() && input[i] == ' '){
+							sents.push_back(" ");
+						}
 						continue;
 					}else if(!flag and input[i] != ' '){
 						flag = !flag;
@@ -149,6 +152,9 @@ int main()
 						flag = !flag;
 						sents.push_back(sent);
 						sent = "";
+						if(i+1 < input.size() && input[i] == ' '){
+							sents.push_back(" ");
+						}
 						continue;
 					}
 					if(flag)
@@ -156,7 +162,7 @@ int main()
 				}
 				sents.push_back(sent);
 				for(string st:sents){
-					cout<<st<<" ";
+					cout<<st;
 				}
 				cout<<endl;
 			}else if(input.find('\\') != string::npos){
