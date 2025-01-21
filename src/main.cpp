@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <unistd.h>
+#include <cstdlib>
 using std::cout;
 using std::endl;
 using std::string;
@@ -20,6 +22,22 @@ string get_address(string command)
 		getline(ss, path, ':');
 		string get_abs_path = path + '/' + command;
 		if(std::filesystem::exists(get_abs_path)){
+			return get_abs_path;
+		}
+	}
+	return "";
+}
+
+string executable_path(string command){
+	string get_paths = std::getenv("PATH");
+	string path;
+	stringstream ss(get_paths);
+
+	while (!ss.eof())
+	{
+		getline(ss, path, ':');
+		string get_abs_path = path + '/' + command;
+		if(!access(get_abs_path.c_str(),X_OK)){
 			return get_abs_path;
 		}
 	}
@@ -77,7 +95,11 @@ int main()
 
 		else
 		{
-			cout << input << ": command not found\n";
+			string get_path = executable_path(input);
+			if(!get_path.empty()){
+				std::system(get_path.c_str());
+			}else
+				cout << input << ": command not found\n";
 		}
 	}
 }
