@@ -77,22 +77,52 @@ int main()
 		{
 			if(input[5] == '\''){
 				string sent = "";
-				for(int i = 5; i<input.size();i++){
-					if(input[i] == '\''){
+				vector<string> sents;
+				bool flag = false;
+				for(int i = 5; i<input.size() - 1;i++){
+					if(input[i] == '\'' && input[i+1] == '\''){
+						i++;
+						continue;
+					}else if(input[i] == '\''){
+						flag = !flag;
+						if(!flag){
+							sents.push_back(sent);
+							sent = "";
+						}
 						continue;
 					}
-					sent += input[i];
+					if(flag)
+						sent += input[i];
 				}
-				cout<<sent<<endl;
+				sents.push_back(sent);
+				for(string st:sents){
+					cout<<st<<" ";
+				}
+				cout<<endl;
 			}else if(input[5] == '\"'){
 				string sent = "";
-				for(int i = 5; i<input.size();i++){
-					if(input[i] == '\"'){
+				vector<string> sents;
+				bool flag = false;
+				for(int i = 5; i<input.size() - 1;i++){
+					if(input[i] == '\"' && input[i+1] == '\"'){
+						i++;
+						continue;
+					}else if(input[i] == '\"'){
+						flag = !flag;
+						if(!flag){
+							sents.push_back(sent);
+							sent = "";
+						}
 						continue;
 					}
-					sent += input[i];
+					if(flag)
+						sent += input[i];
 				}
-				cout<<sent<<endl;
+				sents.push_back(sent);
+				for(string st:sents){
+					cout<<st<<" ";
+				}
+				cout<<endl;
 			}else{
 				string word;
 				int t = 1;
