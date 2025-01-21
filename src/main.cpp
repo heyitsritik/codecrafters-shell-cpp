@@ -139,16 +139,16 @@ int main()
 						if(!flag){
 							sents.push_back(sent);
 							sent = "";
-						}
-						if(i+1 < len && input[i+1] == ' '){
-							sents.push_back(" ");
+							if(i+1 < len && input[i+1] == ' '){
+								sents.push_back(" ");
+							}
 						}
 						continue;
-					}else if(!flag && input[i] != ' '){
+					}else if(sent.empty() && !flag && input[i] != ' '){
 						flag = !flag;
 						sent += input[i];
 						continue;
-					}else if(flag && input[i] == ' '){
+					}else if(sent.empty() && flag && input[i] == ' '){
 						flag = !flag;
 						sents.push_back(sent);
 						sent = "";
