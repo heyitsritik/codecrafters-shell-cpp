@@ -95,9 +95,9 @@ int main()
 
 		else
 		{
-			string get_path = executable_path(input);
+			string get_path = executable_path(words[0]);
 			if(!get_path.empty()){
-				std::system(get_path.c_str());
+				std::system((get_path + " "+ words[1]).c_str());
 			}else
 				cout << input << ": command not found\n";
 		}
