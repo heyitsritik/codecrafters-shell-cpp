@@ -149,6 +149,7 @@ int main()
 				}
 				file.close();
 			}
+			cout<<endl;
 		}
 		else{
 			string get_path = executable_path(words[0]);
