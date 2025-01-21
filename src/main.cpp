@@ -75,10 +75,10 @@ int main()
 		}
 		if (!words.empty() && words[0] == "echo")
 		{
-			if(input[5] == '\''){
-				cout<<input.substr(6,input.size() - 2)<<endl;
-			}else
-				cout << input.substr(5) << endl;
+			if(input[5] == '\'')
+				cout<<input.substr(6,input.size() - 7)<<endl;
+			else
+				cout<<input.substr(5)<<endl;
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
