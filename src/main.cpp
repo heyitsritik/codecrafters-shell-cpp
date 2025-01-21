@@ -161,11 +161,17 @@ int main()
 		}
 		else if(!words.empty() && words[0] == "cat"){
 			int idx = 4;
+			char chr;
+			if(input.find('\'') < input.find('\"')){
+				chr = '\'';
+			}else{
+				chr = '\"';
+			}
 			vector<string> paths;
 			string path = "";
 			bool flag = false;
 			while(idx < input.size()){
-				if(input[idx] == '\'' || input[idx] == '\"'){
+				if(input[idx] == chr){
 					idx++;
 					flag = !flag;
 					if(flag == false){
