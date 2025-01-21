@@ -77,8 +77,14 @@ int main()
 		{
 			if(input[5] == '\'')
 				cout<<input.substr(6,input.size() - 7)<<endl;
-			else
-				cout<<input.substr(5)<<endl;
+			else{
+				string word;
+				int t = 1;
+				for(int i = 1; i<words.size(); i++){
+					cout<<words[i]<<" ";
+				}
+				cout<<endl;
+			}
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
