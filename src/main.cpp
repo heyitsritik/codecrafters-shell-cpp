@@ -130,12 +130,25 @@ int main()
 						i++;
 						sent += '\\';
 						continue;
+					}else if(input[i] == '\\' && input[i+1] == '\"'){
+						i++;
+						sent += input[i];
+						continue;
 					}else if(input[i] == '\"'){
 						flag = !flag;
 						if(!flag){
 							sents.push_back(sent);
 							sent = "";
 						}
+						continue;
+					}else if(!flag and input[i] != ' '){
+						flag = !flag;
+						sent += input[i];
+						continue;
+					}else if(flag and input[i] == ' '){
+						flag = !flag;
+						sents.push_back(sent);
+						sent = "";
 						continue;
 					}
 					if(flag)
