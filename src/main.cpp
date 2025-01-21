@@ -145,7 +145,7 @@ int main()
 			for(auto p:paths){
 				std::ifstream file(p);
 				while(getline(file, path)){
-					cout<<path<<endl;
+					cout<<path;
 				}
 				file.close();
 			}
