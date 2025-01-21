@@ -61,10 +61,29 @@ int main()
 		string input;
 		std::getline(std::cin, input);
 
+		if(input.back() == '\\'){
+			input.pop_back();
+			input += "\\n";
+					string extra = "";
+					cout<<"> ";
+					getline(std::cin, extra);
+					while(extra.back() != '\\'){
+						extra.pop_back();
+						extra += "\\n";
+						input += extra;
+						extra = "";
+						cout<<"> ";
+						getline(std::cin,extra);
+					}
+					input += extra;
+					cout<<input<<endl;
+		}
+
 		if (input == "exit 0" || input == "exit0")
 		{
 			return 0;
 		}
+
 
 		vector<string> words;
 		stringstream s(input);
@@ -104,8 +123,12 @@ int main()
 				vector<string> sents;
 				bool flag = false;
 				for(int i = 5; i<input.size() - 1;i++){
-					if(input[i] == '\"' && input[i+1] == '\"'){
+					if((input[i] == '\"' && input[i+1] == '\"')){
 						i++;
+						continue;
+					}else if(input[i] == '\\' && input[i+1] == '\\'){
+						i++;
+						sent += '\\';
 						continue;
 					}else if(input[i] == '\"'){
 						flag = !flag;
@@ -124,22 +147,6 @@ int main()
 				}
 				cout<<endl;
 			}else if(input.find('\\') != string::npos){
-				if(input.back() == '\\'){
-					input = input.substr(5);
-					input.pop_back();
-					string extra = "";
-					cout<<"> ";
-					getline(std::cin, extra);
-					while(extra.back() != '\\'){
-						extra.pop_back();
-						input += extra;
-						extra = "";
-						cout<<"> ";
-						getline(std::cin,extra);
-					}
-					input += extra;
-					cout<<input<<endl;
-				}else{
 					string sample = "";
 					for(int i = 5; i<input.size(); i++){
 						if(input[i] == '\\'){
@@ -148,7 +155,6 @@ int main()
 						sample += input[i];
 					}
 					cout<<sample<<endl;
-				}
 			}else{
 				string word;
 				int t = 1;
