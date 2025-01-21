@@ -197,7 +197,7 @@ int main()
 			string path = "";
 			bool flag = false;
 			while(idx < input.size()){
-				if(input[idx] == chr || input[idx] == '\\'){
+				if(input[idx] == chr){
 					idx++;
 					flag = !flag;
 					if(flag == false){
