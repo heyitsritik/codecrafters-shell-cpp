@@ -123,6 +123,32 @@ int main()
 					cout<<st<<" ";
 				}
 				cout<<endl;
+			}else if(input.find('\\') != string::npos){
+				if(input.back() == '\\'){
+					input = input.substr(5);
+					input.pop_back();
+					string extra = "";
+					cout<<"> ";
+					getline(std::cin, extra);
+					while(extra.back() != '\\'){
+						extra.pop_back();
+						input += extra;
+						extra = "";
+						cout<<"> ";
+						getline(std::cin,extra);
+					}
+					input += extra;
+					cout<<input<<endl;
+				}else{
+					string sample = "";
+					for(int i = 5; i<input.size(); i++){
+						if(input[i] == '\\'){
+							continue;
+						}
+						sample += input[i];
+					}
+					cout<<sample<<endl;
+				}
 			}else{
 				string word;
 				int t = 1;
@@ -171,7 +197,7 @@ int main()
 			string path = "";
 			bool flag = false;
 			while(idx < input.size()){
-				if(input[idx] == chr){
+				if(input[idx] == chr || input[idx] == '\\'){
 					idx++;
 					flag = !flag;
 					if(flag == false){
