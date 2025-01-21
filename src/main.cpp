@@ -92,7 +92,8 @@ int main()
 					cout << words[1] << ": not found" << endl;
 			}
 		}else if(!words.empty() && words[0] == "pwd"){
-			cout<<std::filesystem::current_path()<<endl;
+			string pwd = std::filesystem::current_path();
+			cout<<pwd.substr(1,pwd.size()-1)<<endl;
 		}
 
 		else
