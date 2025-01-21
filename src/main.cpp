@@ -97,8 +97,6 @@ int main()
 			string pwd = std::filesystem::current_path();
 			cout<<pwd<<endl;
 		}else if(!words.empty() && words[0] == "cd"){
-			string pwd =fs::current_path();
-			// cout<<words[1]<<endl;
 			if(words.size() > 1 && fs::is_directory(words[1])){
 				chdir((words[1]).c_str());
 			}else{
