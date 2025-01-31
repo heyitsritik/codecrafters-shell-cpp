@@ -302,7 +302,7 @@ int main()
 				string output = "";
 				while(words[idx] != ">" and words[idx] != "1>"){
 					if(words[idx].find('-') == string::npos){
-						cout<<words[idx]<<endl;
+						// cout<<words[idx]<<endl;
 						for(const auto entry: fs::directory_iterator(words[idx])){
 							output += entry.path();
 							// cout<<entry.path()<<endl;;
