@@ -188,6 +188,7 @@ string handleCat(string input, bool print){
 	}
 	output += "\n";
 	cout<<output;
+	cout<<"hello"<<endl;
 
 	if(print){
 		cout<<output<<endl;
@@ -321,6 +322,7 @@ int main()
 			}
 		}
 		else if(!words.empty() && words[0] == "cat"){
+			cout<<"world"<<endl;
 			if(input.find(">") != string::npos || input.find("1>") != string::npos){
 				// string fileAppended = executable_path(words.back());
 				int pos = input.find(">");
