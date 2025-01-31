@@ -298,9 +298,9 @@ int main()
 				int idx = 0;
 				string output = "";
 				while(words[idx] != ">" and words[idx] != "1>"){
-					string paths = executable_path(words[idx]);
+					string paths = " h";
 					if(!paths.empty()){
-						for(const auto entry: fs::directory_iterator(paths)){
+						for(const auto entry: fs::directory_iterator(words[idx])){
 							output += entry.path();
 							output += "\n";
 						}
@@ -308,6 +308,7 @@ int main()
 						cout<<words[idx]<<" : not found"<<endl;
 						break;
 					}
+					idx++;
 				}
 				string fileAppended = executable_path(words.back());
 				std::ofstream outfile;
