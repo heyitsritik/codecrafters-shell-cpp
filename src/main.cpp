@@ -293,8 +293,11 @@ int main()
 				}
 			file.close();
 			cout<<endl;
+
 		}else if(words.empty() && words[0] == "ls"){
+			cout<<"world"<<endl;
 			if(input.find('>') != string::npos or input.find("1>") != string::npos){
+				cout<<"hello"<<endl;
 				int idx = 1;
 				string output = "";
 				while(words[idx] != ">" and words[idx] != "1>"){
