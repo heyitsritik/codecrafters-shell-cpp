@@ -46,6 +46,155 @@ string executable_path(string command){
 	}
 	return "";
 }
+string handleEcho(string input, vector<string>& words, bool print){
+	int len = input.size();
+	string output = "";
+	if(input[5] == '\''){
+		string sent = "";
+		vector<string> sents;
+		bool flag = false;
+		for(int i = 5; i<len - 1;i++){
+			if(input[i] == '\'' && input[i+1] == '\''){
+				i++;
+				continue;
+			}else if(input[i] == '\''){
+				flag = !flag;
+				if(!flag){
+					sents.push_back(sent);
+					sent = "";
+				}
+				continue;
+			}
+			if(flag)
+				sent += input[i];
+		}
+		sents.push_back(sent);
+		for(string st:sents){
+			output += st + " ";
+		}
+		cout<<endl;
+	}else if(input[5] == '\"'){
+		string sent = "";
+		vector<string> sents;
+		bool flag = false;
+		for(int i = 5; i<len - 1;i++){
+			if((input[i] == '\"' && input[i+1] == '\"')){
+				i++;
+				continue;
+			}else if(input[i] == '\\' && input[i+1] == '\\'){
+				i++;
+				sent += '\\';
+				continue;
+			}else if(input[i] == '\\' && input[i+1] == '\"'){
+				i++;
+				sent += input[i];
+				continue;
+			}else if(input[i] == '\"'){
+				flag = !flag;
+				if(!flag){
+					sents.push_back(sent);
+					sent = "";
+					if(i+1 < len && input[i+1] == ' '){
+						sents.push_back(" ");
+					}
+				}
+				continue;
+			}else if(sent.empty() && !flag && input[i] != ' '){
+				flag = !flag;
+				sent += input[i];
+				continue;
+			}else if(sent.empty() && flag && input[i] == ' '){
+				flag = !flag;
+				sents.push_back(sent);
+				sent = "";
+				if(i+1 < len && input[i+1] == ' '){
+					sents.push_back(" ");
+				}
+				continue;
+			}
+			if(flag)
+				sent += input[i];
+		}
+		sents.push_back(sent);
+		for(string st:sents){
+			output += st;
+		}
+		output += "\n";
+	}else if(input.find('\\') != string::npos){
+			string sample = "";
+			for(int i = 5; i<len; i++){
+				if(input[i] == '\\'){
+					continue;
+				}
+				sample += input[i];
+			}
+			output += sample + "\n";
+	}else{
+		string word;
+		int t = 1;
+		for(int i = 1; i<words.size(); i++){
+			output += words[i] + " ";
+		}
+		output += "\n";
+	}
+
+	if(print){
+		cout<<output<<endl;
+		return "";
+	}
+	return output;
+		
+}
+string handleCat(string input, bool print){
+	int idx = 4;
+	int len = input.size();
+	string output = "";
+	char chr;
+	if(input.find('\'') < input.find('\"')){
+		chr = '\'';
+	}else{
+		chr = '\"';
+	}
+	vector<string> paths;
+	string path = "";
+	bool flag = false;
+	while(idx < len){
+		if(input[idx] == chr){
+			idx++;
+			flag = !flag;
+			if(flag == false){
+				paths.push_back(path);
+				path = "";
+			}
+		}
+		else if(flag){
+			path += input[idx];
+			idx++;
+		}else{
+			idx++;
+		}
+	}
+	path = "";
+	for(auto p:paths){
+		std::ifstream file(p);
+		if(file.fail()){
+			cout<<"cat: "<<p<<" No such file or directory";
+		}else{
+			while(getline(file, path)){
+				output += path;
+			}
+		}
+		file.close();
+	}
+	output += "\n";
+
+	if(print){
+		cout<<output<<endl;
+		return "";
+	}
+	return output;
+}
+
 
 int main()
 {
@@ -94,98 +243,24 @@ int main()
 		}
 		if (!words.empty() && words[0] == "echo")
 		{
-			if(input[5] == '\''){
-				string sent = "";
-				vector<string> sents;
-				bool flag = false;
-				for(int i = 5; i<len - 1;i++){
-					if(input[i] == '\'' && input[i+1] == '\''){
-						i++;
-						continue;
-					}else if(input[i] == '\''){
-						flag = !flag;
-						if(!flag){
-							sents.push_back(sent);
-							sent = "";
-						}
-						continue;
-					}
-					if(flag)
-						sent += input[i];
+			if(input.find(">") != string::npos || input.find("1>") != string::npos){
+				// string fileAppended = executable_path(words.back());
+				int pos = input.find(">");
+				int ex = 1;
+				if(input.find("1>") != string::npos){
+					ex = 2;
 				}
-				sents.push_back(sent);
-				for(string st:sents){
-					cout<<st<<" ";
-				}
-				cout<<endl;
-			}else if(input[5] == '\"'){
-				string sent = "";
-				vector<string> sents;
-				bool flag = false;
-				for(int i = 5; i<len - 1;i++){
-					if((input[i] == '\"' && input[i+1] == '\"')){
-						i++;
-						continue;
-					}else if(input[i] == '\\' && input[i+1] == '\\'){
-						i++;
-						sent += '\\';
-						continue;
-					}else if(input[i] == '\\' && input[i+1] == '\"'){
-						i++;
-						sent += input[i];
-						continue;
-					}else if(input[i] == '\"'){
-						flag = !flag;
-						if(!flag){
-							sents.push_back(sent);
-							sent = "";
-							if(i+1 < len && input[i+1] == ' '){
-								sents.push_back(" ");
-							}
-						}
-						continue;
-					}else if(sent.empty() && !flag && input[i] != ' '){
-						flag = !flag;
-						sent += input[i];
-						continue;
-					}else if(sent.empty() && flag && input[i] == ' '){
-						flag = !flag;
-						sents.push_back(sent);
-						sent = "";
-						if(i+1 < len && input[i+1] == ' '){
-							sents.push_back(" ");
-						}
-						continue;
-					}
-					if(flag)
-						sent += input[i];
-				}
-				sents.push_back(sent);
-				for(string st:sents){
-					cout<<st;
-				}
-				cout<<endl;
-			}else if(input.find('\\') != string::npos){
-					string sample = "";
-					for(int i = 5; i<len; i++){
-						if(input[i] == '\\'){
-							continue;
-						}
-						sample += input[i];
-					}
-					cout<<sample<<endl;
+				std::ofstream outfile;
+				outfile.open(words.back(), std::ios_base::app);
+				outfile << handleEcho(input.substr(0,pos-ex),words,false);
+				outfile.close();
 			}else{
-				string word;
-				int t = 1;
-				for(int i = 1; i<words.size(); i++){
-					cout<<words[i]<<" ";
-				}
-				cout<<endl;
+				handleEcho(input,words,true);
 			}
 		}
 		else if (!words.empty() && words[0] == "type")
 		{
-			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit" || words[1] == "pwd" || words[1] == "cd"))
+			if (words.size() > 1 && (words[1] == "echo" || words[1] == "type" || words[1] == "exit" || words[1] == "pwd" || words[1] == "cd" || words[1] == "ls"))
 			{
 				cout << words[1] << " is a shell builtin" << endl;
 			}
@@ -218,43 +293,44 @@ int main()
 				}
 			file.close();
 			cout<<endl;
-		}
-		else if(!words.empty() && words[0] == "cat"){
-			int idx = 4;
-			char chr;
-			if(input.find('\'') < input.find('\"')){
-				chr = '\'';
-			}else{
-				chr = '\"';
-			}
-			vector<string> paths;
-			string path = "";
-			bool flag = false;
-			while(idx < len){
-				if(input[idx] == chr){
-					idx++;
-					flag = !flag;
-					if(flag == false){
-						paths.push_back(path);
-						path = "";
+		}else if(words.empty() && words[0] == "ls"){
+			if(input.find('>') != string::npos or input.find("1>") != string::npos){
+				int idx = 0;
+				string output = "";
+				while(words[idx] != ">" and words[idx] != "1>"){
+					string paths = executable_path(words[idx]);
+					if(!paths.empty()){
+						for(const auto entry: fs::directory_iterator(paths)){
+							output += entry.path();
+							output += "\n";
+						}
+					}else{
+						cout<<words[idx]<<" : not found"<<endl;
+						break;
 					}
 				}
-				else if(flag){
-					path += input[idx];
-					idx++;
-				}else{
-					idx++;
-				}
+				string fileAppended = executable_path(words.back());
+				std::ofstream outfile;
+				outfile.open(fileAppended,std::ios_base::app);
+				outfile<<output;
+				outfile.close();
 			}
-			path = "";
-			for(auto p:paths){
-				std::ifstream file(p);
-				while(getline(file, path)){
-					cout<<path;
+		}
+		else if(!words.empty() && words[0] == "cat"){
+			if(input.find(">") != string::npos || input.find("1>") != string::npos){
+				// string fileAppended = executable_path(words.back());
+				int pos = input.find(">");
+				int ex = 1;
+				if(input.find("1>") != string::npos){
+					ex = 2;
 				}
-				file.close();
+				std::ofstream outfile;
+				outfile.open(words.back(), std::ios_base::app);
+				outfile << handleCat(input.substr(0,pos - ex),false);
+				outfile.close();
+			}else{
+				handleCat(input,true);
 			}
-			cout<<endl;
 		}
 		else{
 			string get_path = executable_path(words[0]);
