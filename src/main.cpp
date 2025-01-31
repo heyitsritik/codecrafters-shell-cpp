@@ -294,10 +294,10 @@ int main()
 			file.close();
 			cout<<endl;
 
-		}else if(words.empty() && words[0] == "ls"){
-			cout<<"world"<<endl;
+		}else if(!words.empty() && words[0] == "ls"){
+			// cout<<"world"<<endl;
 			if(input.find('>') != string::npos or input.find("1>") != string::npos){
-				cout<<"hello"<<endl;
+				// cout<<"hello"<<endl;
 				int idx = 1;
 				string output = "";
 				while(words[idx] != ">" and words[idx] != "1>"){
@@ -305,7 +305,7 @@ int main()
 						cout<<words[idx]<<endl;
 						for(const auto entry: fs::directory_iterator(words[idx])){
 							output += entry.path();
-							cout<<entry.path()<<endl;;
+							// cout<<entry.path()<<endl;;
 							output += "\n";
 						}
 					}
