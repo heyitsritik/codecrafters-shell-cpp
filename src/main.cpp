@@ -307,6 +307,7 @@ int main()
 					idx++;
 				}
 				// string fileAppended = executable_path(words.back());
+				cout<<output<<endl;
 				std::ofstream outfile;
 				outfile.open(words.back(),std::ios_base::app);
 				outfile<<output;
