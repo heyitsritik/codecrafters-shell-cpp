@@ -295,12 +295,13 @@ int main()
 			cout<<endl;
 		}else if(words.empty() && words[0] == "ls"){
 			if(input.find('>') != string::npos or input.find("1>") != string::npos){
-				int idx = 0;
+				int idx = 1;
 				string output = "";
 				while(words[idx] != ">" and words[idx] != "1>"){
 					if(words[idx].find('-') == string::npos){
 						for(const auto entry: fs::directory_iterator(words[idx])){
 							output += entry.path();
+							cout<<entry.path()<<endl;;
 							output += "\n";
 						}
 					}
