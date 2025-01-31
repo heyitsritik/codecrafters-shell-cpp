@@ -187,6 +187,7 @@ string handleCat(string input, bool print){
 		file.close();
 	}
 	output += "\n";
+	cout<<output;
 
 	if(print){
 		cout<<output<<endl;
